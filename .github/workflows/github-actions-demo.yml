@@ -14,3 +14,7 @@ jobs:
       - run: echo "This job's status is ${{ job.status }}."
       - run: node --version
       - run: java --version
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+      - run: node --version
