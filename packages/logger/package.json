@@ -1,0 +1,8 @@
+{
+  "name": "logger",
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "lodash": "^4.0.0",
+    "uuid": "^7.0.0"
+  }
+}

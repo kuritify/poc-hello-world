@@ -1,0 +1,7 @@
+{
+  "name": "batch-a",
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "logger": "workspace:^"
+  }
+}
