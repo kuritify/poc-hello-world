@@ -25,9 +25,17 @@ __metadata:
   resolution: "logger@workspace:packages/logger"
   dependencies:
     lodash: ^4.0.0
+    moment: 2.29.0
     uuid: ^7.0.0
   languageName: unknown
   linkType: soft
+
+"moment@npm:2.29.0":
+  version: 2.29.0
+  resolution: "moment@npm:2.29.0"
+  checksum: 21d8adaf4636bf344a0a0c1ef7aa754c70736e75b4ff014a9c5c50464e78b3269089c8910398ee10e3560819343e12b14897d26a533d19ed8fdfcc18beb550d5
+  languageName: node
+  linkType: hard
 
 "poc-hello-world@workspace:.":
   version: 0.0.0-use.local
