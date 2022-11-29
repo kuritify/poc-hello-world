@@ -1,6 +1,7 @@
+## hoge
 [![OpenSSF Scorecard]
-(https://api.securityscorecards.dev/projects/github.com/{org}/{repo}/badge)]
-(https://api.securityscorecards.dev/projects/github.com/{org}/{repo})
+(https://api.securityscorecards.dev/projects/github.com/kuritify/poc-hello-world/badge)]
+(https://api.securityscorecards.dev/projects/github.com/kuritify/poc-hello-world)
 
 # poc-hello-world
 poc
