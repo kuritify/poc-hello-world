@@ -41,9 +41,9 @@ jobs:
       - name: run ls -la
         run: ls -la
    
-      - name: ${{ matrix.name }} step
+      - name: ${{ matrix.name }} step adn sleep
 #        run:  test ${{ matrix.value }} == 1
-         run: echo "${{ matrix.name }}" && slepp ${{ matrix.sleep }}
+        run: echo ${{ matrix.name }} && sleep ${{ matrix.sleep }}
 
       - name: check materix value
         run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
