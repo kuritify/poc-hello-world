@@ -21,7 +21,7 @@ jobs:
       - depende-job
     concurrency:
       group: "${{ github.workflow }} @ ${{ matrix.name }}"
-      cancel-in-progress: true
+      cancel-in-progress: false
 
     strategy:
       # https://docs.github.com/ja/actions/using-jobs/using-a-matrix-for-your-jobs#handling-failures
