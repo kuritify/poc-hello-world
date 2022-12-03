@@ -21,7 +21,7 @@ jobs:
       - depende-job
     strategy:
       # https://docs.github.com/ja/actions/using-jobs/using-a-matrix-for-your-jobs#handling-failures
-      fail-fast: true
+    #  fail-fast: true
       matrix:
         include:
           - name: first
@@ -30,6 +30,8 @@ jobs:
             value: 2
           - name: third
             value: 1
+    concurency:
+      group: '${{ github.workflow }} @ ${{ matrix.name }}'
     steps:
       #- uses: actions/checkout@v3
       - name: run ls -la
