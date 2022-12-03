@@ -4,6 +4,9 @@ on: [push]
 permissions:
   contents: read
 
+concurency:
+  group: ${{ github.workflow }}
+
 jobs:
   depende-job:
     runs-on: ubuntu-latest
@@ -30,8 +33,6 @@ jobs:
             value: 2
           - name: third
             value: 1
-    concurency:
-      group: '${{ github.workflow }} @ ${{ matrix.name }}'
     steps:
       #- uses: actions/checkout@v3
       - name: run ls -la
