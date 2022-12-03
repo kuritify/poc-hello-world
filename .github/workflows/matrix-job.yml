@@ -29,17 +29,21 @@ jobs:
         include:
           - name: first
             value: 1
+            sleep: 200
           - name: seconde
             value: 2
+            sleep: 100
           - name: third
             value: 1
+            sleep: 100
     steps:
       #- uses: actions/checkout@v3
       - name: run ls -la
         run: ls -la
    
       - name: ${{ matrix.name }} step
-        run:  test ${{ matrix.value }} == 1
+#        run:  test ${{ matrix.value }} == 1
+         run: echo "${{ matrix.name }}" && slepp ${{ matrix.sleep }}
 
       - name: check materix value
         run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
