@@ -1,0 +1,43 @@
+name: 'matrix preview'
+on: [push]
+
+permissions:
+  contents: read
+
+jobs:
+  depende-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+
+      - name: run ls -la depended job
+        run: ls -la
+     
+  # テストすること。matrixで一部が失敗した場合リスタートできるのか
+  matrix-job:
+    runs-on: ubuntu-latest
+    needs:
+      - depende-job
+    strategy:
+      # https://docs.github.com/ja/actions/using-jobs/using-a-matrix-for-your-jobs#handling-failures
+      fail-fast: true
+      matrix:
+        include:
+          - name: first
+            value: 1
+          - name: seconde
+            value: 2
+          - name: third
+            value: 1
+    steps:
+      #- uses: actions/checkout@v3
+      - name: run ls -la
+        run: ls -la
+   
+      - name: ${{ matrix.name }} step
+        run:  test ${{ matrix.value }} == 1
+
+      - name: check materix value
+        run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
+ 
