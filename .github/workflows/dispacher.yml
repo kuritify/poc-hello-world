@@ -23,6 +23,8 @@ jobs:
         run: git name-rev --name-only HEAD
 
   deploy-manually-real:
+    needs:
+      - deploy-manually-prepare
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
