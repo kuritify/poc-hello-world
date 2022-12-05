@@ -14,7 +14,7 @@ runs:
     
     # https://github.com/actions/setup-node/issues/325#issuecomment-976587193
     - name: set yarn cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: yarn-cache 
       with:
         path: |
@@ -32,7 +32,7 @@ runs:
       shell: bash
 
     - name: set nx cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       id: nx-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
       with:
         path: .nx-cache
