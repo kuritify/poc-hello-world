@@ -1,0 +1,30 @@
+name: cache behavior
+on: [push, pull_request]
+
+jobs:
+  cache-behaviro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: setup nx and cache
+        uses: ./.github/actions/yarn-nx-cache/
+
+      - name: check
+        run: |
+          node --version
+          yarn --version
+          echo $NX_CACHE_DIRECTORY
+      
+      - name: run nx
+        run: yarn run -T nx run-many --target lint
+      - name: write to cache
+        run: echo "hogehoge" >> .nx-cache/$(git rev-parse HEAD).txt
+
+      - name: check write
+        run: ls -la .nx-cache
+      
+    

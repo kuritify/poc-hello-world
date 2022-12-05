@@ -1,0 +1,48 @@
+name: 'yarn and nx cache'
+description: 'make workflow to faster and efficient'
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: set yarn cache path
+      id: yarn-cache-dir-path
+      run: echo "YARN_CACHE_DIR=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+      shell: bash
+    
+    # https://github.com/actions/setup-node/issues/325#issuecomment-976587193
+    - name: set yarn cache
+      uses: actions/cache@v2
+      id: yarn-cache 
+      with:
+        path: |
+          node_modules
+          ${{ steps.yarn-cache-dir-path.outputs.YARN_CACHE_DIR }}
+        key: yarn-cache-folder-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+        restore-keys: |
+          yarn-cache-folder-
+
+    - name:  set nx cache dir to environment varibales
+      id: set-nx-version
+      run:  |
+        echo "NX_CACHE_DIRECTORY=$(pwd)/.nx-cache" >> $GITHUB_ENV
+        echo "NX_VERSION=$(jq -r < package.json .devDependencies.nx)" >> $GITHUB_OUTPUT
+
+    - name: set nx cache
+      uses: actions/cache@v2
+      id: nx-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      with:
+        path: .nx-cache
+        key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}
+
+    - name: check cached 
+      run: |
+        ls -la node_modules || true
+        ls -la .nx-cache || true
+        ls -la .yarn/cache || true
+
+    - name: install dependencies 
+      run: yarn install --immutable
+      
