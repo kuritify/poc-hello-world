@@ -38,6 +38,7 @@ runs:
         path: ${{ env.NX_CACHE_DIRECTORY }}
         key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-${{ github.sha }}-
         restore-keys: |
+          - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-${{ github.sha }}-
           - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-
 
     - name: check cached 
