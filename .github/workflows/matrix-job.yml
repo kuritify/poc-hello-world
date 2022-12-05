@@ -30,7 +30,7 @@ jobs:
         include:
           - name: first
             value: 1
-            sleep: 200
+            sleep: 2
           - name: seconde
             value: 2
             sleep: 100

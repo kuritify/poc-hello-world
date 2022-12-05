@@ -1,13 +1,14 @@
 name: dispacher job
-workflow_dispatch:
-  inputs:
-    environment:
-      description: which environment to deploy
-      required: true
-      type: choice
-      options:
-        - development
-        - production
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: which environment to deploy
+        required: true
+        type: choice
+        options:
+          - development
+          - production
 
 jobs:
   deploy-manually-prepare:
