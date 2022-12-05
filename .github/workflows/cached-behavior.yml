@@ -21,7 +21,6 @@ jobs:
       
       - name: run nx
         run: yarn run -T nx run-many --target build --verbose
-      - name: write to cache
 
       - name: check write
         run: ls -la .nx-cache
@@ -51,4 +50,3 @@ jobs:
 
       - name: check write
         run: ls -la .nx-cache
-      
