@@ -1,0 +1,31 @@
+name: dispacher job
+workflow_dispatch:
+  inputs:
+    environment:
+      description: which environment to deploy
+      required: true
+      type: choice
+      options:
+        - development
+        - production
+
+jobs:
+  deploy-manually-prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: before deploy
+        run: git name-rev --name-only HEAD
+
+  deploy-manually-real:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+    steps:
+      - name: hoge run
+        run: echo deploy to ${{ inputs.environment }}
+      
