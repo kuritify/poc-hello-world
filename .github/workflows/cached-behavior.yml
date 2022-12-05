@@ -20,7 +20,7 @@ jobs:
           echo $NX_CACHE_DIRECTORY
       
       - name: run nx
-        run: yarn run -T nx run-many --target build
+        run: yarn run -T nx run-many --target build --verbose
       - name: write to cache
         run: echo "hogehoge" >> .nx-cache/$(git rev-parse HEAD).txt
 
