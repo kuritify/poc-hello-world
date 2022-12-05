@@ -29,6 +29,7 @@ runs:
       run:  |
         echo "NX_CACHE_DIRECTORY=$(pwd)/.nx-cache" >> $GITHUB_ENV
         echo "NX_VERSION=$(jq -r < package.json .devDependencies.nx)" >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: set nx cache
       uses: actions/cache@v2
@@ -42,7 +43,9 @@ runs:
         ls -la node_modules || true
         ls -la .nx-cache || true
         ls -la .yarn/cache || true
+      shell: bash
 
     - name: install dependencies 
       run: yarn install --immutable
+      shell: bash
       
