@@ -37,8 +37,8 @@ runs:
       with:
         path: .nx-cache
         key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-${{ hashFiles(${{env.NX_CACHE_DIRECTORY}}) }}-
-      restore-keys: |
-        - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-
+        restore-keys: |
+          - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-
 
     - name: check cached 
       run: |
