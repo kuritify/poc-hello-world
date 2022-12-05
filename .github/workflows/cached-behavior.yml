@@ -45,7 +45,7 @@ jobs:
           yarn --version
           echo $NX_CACHE_DIRECTORY
       
-      - name: run nx
+      - name: run nx seconder
         run: yarn run -T nx run-many --target build
 
       - name: check write

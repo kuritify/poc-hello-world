@@ -81,6 +81,6 @@ jobs:
       - name: run nx
         run: yarn run -T nx run-many --target build
 
-       - name: run nx secondtime
+      - name: run nx secondtime
         run: yarn run -T nx run-many --target build
  
