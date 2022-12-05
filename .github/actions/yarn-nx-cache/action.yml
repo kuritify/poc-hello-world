@@ -35,16 +35,15 @@ runs:
       uses: actions/cache@v3
       id: nx-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
       with:
-        path: .nx-cache
+        path: ${{ env.NX_CACHE_DIRECTORY }}
         key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-${{ github.sha }}-
         restore-keys: |
           - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-
 
     - name: check cached 
       run: |
-        ls -la node_modules || true
         ls -la .nx-cache || true
-        ls -la .yarn/cache || true
+        ls -la ${{ env.NX_CACHE_DIRECTORY }} || true
       shell: bash
 
     - name: install dependencies 
