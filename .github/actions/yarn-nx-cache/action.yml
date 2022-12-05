@@ -4,7 +4,7 @@ runs:
   using: "composite"
   steps:
     - uses: actions/setup-node@v3
-      with:
+      with: 
         node-version: 16
 
     - name: set yarn cache path
@@ -36,7 +36,9 @@ runs:
       id: nx-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
       with:
         path: .nx-cache
-        key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}
+        key: nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-${{ hashFiles(${{env.NX_CACHE_DIRECTORY}}) }}-
+      restore-keys: |
+        - nx-cache-${{ runner.os }}-${{ steps.set-nx-version.outputs.NX_VERSION }}-
 
     - name: check cached 
       run: |
