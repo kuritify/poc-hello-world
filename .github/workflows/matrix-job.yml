@@ -90,8 +90,8 @@ jobs:
     if: always()
     uses: ./.github/workflows/slack-notification.yml
     with:
-      success: ${{ success() }}
-      failure: ${{ failure() }}
-      cancelled: ${{ cancelled() }}
+      success: success()
+      failure: failure()
+      cancelled: cancelled()
     secrets: inherit
 
