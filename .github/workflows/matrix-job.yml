@@ -88,5 +88,5 @@ jobs:
     needs:
       - matrix-job
     if: ${{ always() }}
-    uses: ./.github/workflows/slack-notification.yaml
+    uses: ./.github/workflows/slack-notification.yml
 
