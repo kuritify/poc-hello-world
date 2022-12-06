@@ -23,6 +23,9 @@ runs:
 
         cancelled=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
         jq -r '.jobs[] | select(.status == "completed" and .conclusion == "cancelled").conclusion' | wc -l)
+        
+        echo $failure
+        echo $cancelled
 
         if [ "${failure}" -gt 0 ]; then
           status="failure"
