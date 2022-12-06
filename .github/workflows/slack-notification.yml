@@ -12,7 +12,10 @@ jobs:
         uses: ./.github/actions/workflow-status/
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        
+      
+      - name: hoge
+        run: echo ${{ steps.workflow-status.outputs.status }}
+
       - name: make success payload param
         if: steps.workflow-status.outputs.status == 'suucess'
         run: |
