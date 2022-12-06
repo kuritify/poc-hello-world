@@ -34,11 +34,11 @@ jobs:
           payload: |
             {
               icon_emoji: "${{ env.ICON_EMOJI }}",
-              username: "${{github.event.repository.name}} ",
-              text: "GitHub Action result:  ${{ env.TEXT}}",
+              username: "${{ github.event.repository.name }}",
+              text: "GitHub Action result: ${{ env.TEXT }}",
               attachments: [
                 {
-                  "color": "#eb4034",
+                  "color": "${{ env.COLOR }}",
                   "author_name": "${{ github.actor }}",
                   "author_icon": "${{ github.event.sender.avatar_url }}",
                   "text": "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}"
