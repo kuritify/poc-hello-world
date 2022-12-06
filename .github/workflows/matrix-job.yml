@@ -30,13 +30,13 @@ jobs:
         include:
           - name: first
             value: 1
-            sleep: 2
+            sleep: 30
           - name: seconde
             value: 2
-            sleep: 2
+            sleep: 30
           - name: third
             value: 1
-            sleep: 2
+            sleep: 30
     steps:
       - uses: actions/checkout@v3
 
@@ -52,7 +52,9 @@ jobs:
 
       - name: check materix value
         run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
- 
+      
+      - name: aieuo
+        run: test ${{ matrix.value }} == 1
       - name: checkout
         uses: actions/checkout@v3
         with:
@@ -84,14 +86,32 @@ jobs:
       - name: run nx secondtime
         run: yarn run -T nx run-many --target build
 
+  peke:
+    runs-on: ubuntu-latest
+    needs:
+      - matrix-job
+    if: always()
+    steps:
+      - name: aaaa
+        run: |
+          echo ${{ success ()}}
+          echo ${{ failure ()}}
+          echo ${{ cancelled ()}}
+      
+#      success: success()
+#      failure: failure()
+#      cancelled: cancelled()
+    secrets: inherit
+
+
   notification:
     needs:
       - matrix-job
     if: always()
     uses: ./.github/workflows/slack-notification.yml
-    with:
-      success: success()
-      failure: failure()
-      cancelled: cancelled()
+#    with:
+#      success: success()
+#      failure: failure()
+#      cancelled: cancelled()
     secrets: inherit
 

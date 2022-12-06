@@ -6,12 +6,15 @@ on:
       success:
         required: true
         type: boolean
+        default: false
       failure:
         required: true
         type: boolean
+        default: false
       cancelled:
         required: true
         type: boolean
+        default: true
 jobs:
   slack-notification:
     runs-on: ubuntu-latest
