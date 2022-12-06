@@ -15,7 +15,7 @@ runs:
     - id: workflow-status
       run: |
         url="${{ github.event.repository.html_url }}/repos"
-        repo="${ github.event.repository.name }}"
+        repo="${{ github.event.repository.name }}"
         run_id="${{ github.run_id }}"
         token="${{ inputs.github-token }}"
         failure=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
