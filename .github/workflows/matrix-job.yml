@@ -83,4 +83,15 @@ jobs:
 
       - name: run nx secondtime
         run: yarn run -T nx run-many --target build
- 
+
+  success:
+    run-on: ubuntu-latest
+    needs:
+      - matrix-job
+    if: ${{ always() }}
+    steps:
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
