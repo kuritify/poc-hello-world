@@ -14,9 +14,9 @@ runs:
   steps:
     - id: workflow-status
       run: |
-        url="${{ github.event.repository.html_url }}/repos"
-        repo="${{ github.event.repository.name }}"
-        run_id="${{ github.run_id }}"
+        url="${GITHUB_API_URL}/repos"
+        repo="${GITHUB_REPOSITORY}"
+        run_id="${GITHUB_RUN_ID}"
         token="${{ inputs.github-token }}"
         failure=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
         jq -r '.jobs[] | select(.status == "completed" and .conclusion == "failure").conclusion' | wc -l)
@@ -24,11 +24,14 @@ runs:
         cancelled=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
         jq -r '.jobs[] | select(.status == "completed" and .conclusion == "cancelled").conclusion' | wc -l)
         
-        echo $failure
-        echo $cancelled
-        status=cancelled
-
-       
+        if [ "${failure}" -gt 0 ]; then
+          status="failure"
+        elif [ "${cancelled}" -gt 0 ]; then
+          status="cancelled"
+        else 
+          status="success"
+        fi
+        
         echo "status=${status}" >> $GIHUB_OUTPUT
       shell: bash
 
