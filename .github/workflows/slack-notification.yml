@@ -6,9 +6,12 @@ jobs:
   slack-notification:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: get pre jobs status
         id: workflow-status
         uses: ./.github/actions/workflow-status/
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: make success payload param
         if: steps.workflow-status.outputs.status == 'suucess'
