@@ -87,7 +87,7 @@ jobs:
   notification:
     needs:
       - matrix-job
-    if: success() || failures() || cancelled()
+    if: success() || failure() || cancelled()
     uses: ./.github/workflows/slack-notification.yml
     secrets: inherit
 
