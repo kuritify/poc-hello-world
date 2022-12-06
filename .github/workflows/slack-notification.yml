@@ -6,20 +6,42 @@ jobs:
   slack-notification:
     runs-on: ubuntu-latest
     steps:
+      - name: make success payload param
+        if: success()
+        run: |
+          echo "ICON_EMOJI=:gift:" >> $GITHUB_ENV
+          echo "COLOR=#34eb34" >> $GITHUB_ENV
+          echo "TEXT=SUCCESS" >> $GITHUB_ENV
+ 
+      - name: make failed payload param
+        if: failure()
+        run: |
+          echo "ICON_EMOJI=:exclamation:" >> $GITHUB_ENV
+          echo "COLOR=#eb4034" >> $GITHUB_ENV
+          echo "TEXT=FAILED" >> $GITHUB_ENV
+ 
+      - name: make cancel payload param
+        if: cancelled()
+        run: |
+          echo "ICON_EMOJI=:grey_exclamation:" >> $GITHUB_ENV
+          echo "COLOR=#949494" >> $GITHUB_ENV
+          echo "TEXT=CANCELLED" >> $GITHUB_ENV
+ 
       - name: send to webhook
         uses: slackapi/slack-github-action@v1.23.0
         with:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
+              icon_emoji: "${{ env.ICON_EMOJI }}",
+              username: "${{github.event.repository.name}} ",
+              text: "GitHub Action result:  ${{ env.TEXT}}",
+              attachments: [
                 {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-                  }
+                  "color": "#eb4034",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "text": "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}"
                 }
               ]
             }
