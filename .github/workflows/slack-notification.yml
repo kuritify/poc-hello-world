@@ -17,21 +17,21 @@ jobs:
         run: echo ${{ steps.workflow-status.outputs.status }}
 
       - name: make success payload param
-        if: steps.workflow-status.outputs.status == 'suucess'
+        if: ${{ steps.workflow-status.outputs.status }} == 'suucess'
         run: |
           echo "ICON_EMOJI=:gift:" >> $GITHUB_ENV
           echo "COLOR=#34eb34" >> $GITHUB_ENV
           echo "TEXT=SUCCESS" >> $GITHUB_ENV
  
       - name: make failure payload param
-        if: steps.workflow-status.outputs.status == 'failure'
+        if: ${{ steps.workflow-status.outputs.status }} == 'failure'
         run: |
           echo "ICON_EMOJI=:exclamation:" >> $GITHUB_ENV
           echo "COLOR=#eb4034" >> $GITHUB_ENV
           echo "TEXT=FAILED" >> $GITHUB_ENV
  
       - name: make cancel payload param
-        if: steps.workflow-status.outputs.status == 'cancelled'
+        if: ${{ steps.workflow-status.outputs.status }} == 'cancelled'
         run: |
           echo "ICON_EMOJI=:grey_exclamation:" >> $GITHUB_ENV
           echo "COLOR=#949494" >> $GITHUB_ENV
