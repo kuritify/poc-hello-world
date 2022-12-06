@@ -94,9 +94,9 @@ jobs:
     steps:
       - name: aaaa
         run: |
-          echo ${{ success ()}}
-          echo ${{ failure ()}}
-          echo ${{ cancelled ()}}
+          echo ${{ success()}}
+          echo ${{ failure()}}
+          echo ${{ cancelled()}}
       
 #      success: success()
 #      failure: failure()
