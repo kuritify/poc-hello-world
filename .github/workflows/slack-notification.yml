@@ -2,26 +2,36 @@ name: Slack Notification
 
 on:
   workflow_call:
+    inputs:
+      success:
+        required: true
+        type: boolean
+      failure:
+        required: true
+        type: boolean
+      cancelled:
+        required: true
+        type: boolean
 jobs:
   slack-notification:
     runs-on: ubuntu-latest
     steps:
       - name: make success payload param
-        if: success()
+        if: input.success
         run: |
           echo "ICON_EMOJI=:gift:" >> $GITHUB_ENV
           echo "COLOR=#34eb34" >> $GITHUB_ENV
           echo "TEXT=SUCCESS" >> $GITHUB_ENV
  
-      - name: make failed payload param
-        if: failure()
+      - name: make failure payload param
+        if: input.failure
         run: |
           echo "ICON_EMOJI=:exclamation:" >> $GITHUB_ENV
           echo "COLOR=#eb4034" >> $GITHUB_ENV
           echo "TEXT=FAILED" >> $GITHUB_ENV
  
       - name: make cancel payload param
-        if: cancelled()
+        if: input.cancelled
         run: |
           echo "ICON_EMOJI=:grey_exclamation:" >> $GITHUB_ENV
           echo "COLOR=#949494" >> $GITHUB_ENV
