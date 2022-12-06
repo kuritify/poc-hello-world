@@ -12,3 +12,4 @@
 node_modules
 .nx-cache
 *.swp
+dist

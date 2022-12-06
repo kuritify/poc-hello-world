@@ -30,15 +30,16 @@ jobs:
         include:
           - name: first
             value: 1
-            sleep: 2
+            sleep: 30
           - name: seconde
             value: 2
-            sleep: 100
+            sleep: 30
           - name: third
             value: 1
-            sleep: 100
+            sleep: 30
     steps:
-      #- uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
       - name: run ls -la
         run: ls -la
    
@@ -48,4 +49,47 @@ jobs:
 
       - name: check materix value
         run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
+
+      - name: check materix value
+        run: echo "name ${{ matrix.name }} value ${{ matrix.value }}"
+      
+      - name: aieuo
+        run: test ${{ matrix.value }} == 1
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: setup nx and cache
+        uses: ./.github/actions/yarn-nx-cache/
+        with:
+          fetch-depth: 0
+
+      - name: check
+        run: |
+          node --version
+          yarn --version
+          echo $NX_CACHE_DIRECTORY
  
+      - name: check write
+        run: ls -la .nx-cache
+ 
+      - name: check
+        run: |
+          node --version
+          yarn --version
+          echo $NX_CACHE_DIRECTORY
+      
+      - name: run nx
+        run: yarn run -T nx run-many --target build
+
+      - name: run nx secondtime
+        run: yarn run -T nx run-many --target build
+
+  notification:
+    needs:
+      - matrix-job
+    if: always()
+    uses: ./.github/workflows/slack-notification.yml
+    secrets: inherit
+

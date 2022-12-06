@@ -2,6 +2,7 @@
   "name": "poc-hello-world",
   "packageManager": "yarn@3.3.0",
   "private": true,
+  "version": "1.0.0",
   "workspaces": [
     "packages/**"
   ],
