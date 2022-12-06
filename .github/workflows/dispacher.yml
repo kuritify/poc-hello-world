@@ -32,7 +32,7 @@ jobs:
       - name: hoge run
         run: echo deploy to ${{ inputs.environment }}
      
-      - name: create tag
+      - name: create tag dayo
         run: |
           TAG=v$(jq -r < package.json .version)
           git tag $TAG
