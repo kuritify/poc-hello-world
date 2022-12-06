@@ -89,4 +89,5 @@ jobs:
       - matrix-job
     if: ${{ always() }}
     uses: ./.github/workflows/slack-notification.yml
+    secrets: inherit
 
