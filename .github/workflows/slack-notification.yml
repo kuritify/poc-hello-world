@@ -13,7 +13,7 @@ jobs:
           url="${GITHUB_API_URL}/repos"
           repo="${GITHUB_REPOSITORY}"
           run_id="${GITHUB_RUN_ID}"
-          token="${{ secret.GITHUB_TOKEN }}"
+          token="${{ secrets.GITHUB_TOKEN }}"
           failure=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
           jq -r '.jobs[] | select(.status == "completed" and .conclusion == "failure").conclusion' | wc -l)
 
