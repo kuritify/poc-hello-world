@@ -26,14 +26,15 @@ runs:
         
         echo $failure
         echo $cancelled
+        status=cancelled
 
-        if [ "${failure}" -gt 0 ]; then
-          status="failure"
-        elif [ "${cancelled}" -gt 0 ]; then
-          status="cancelled"
-        else 
-          status="success"
-        fi
+#        if [ "${failure}" -gt 0 ]; then
+#          status="failure"
+#        elif [ "${cancelled}" -gt 0 ]; then
+#          status="cancelled"
+#        else 
+#          status="success"
+#        fi
         
         echo "status=${status}" >> $GIHUB_OUTPUT
       shell: bash
