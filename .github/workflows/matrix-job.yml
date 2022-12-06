@@ -85,7 +85,7 @@ jobs:
         run: yarn run -T nx run-many --target build
 
   success:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs:
       - matrix-job
     if: ${{ always() }}
