@@ -32,6 +32,6 @@ runs:
           status="success"
         fi
         
-        echo "status=${status}" >> $GIHUB_OUTPUT
+        echo "status=${status}" >> $GITHUB_OUTPUT
       shell: bash
 
