@@ -1,0 +1,78 @@
+name: Slack Notification
+
+on:
+  workflow_call:
+jobs:
+  slack-notification:
+    runs-on: ubuntu-latest
+    steps:
+       # https://github.com/martialonline/workflow-status/blob/master/action.yml
+      - name: get workflow status
+        id: workflow-status
+        run: |
+          url="${GITHUB_API_URL}/repos"
+          repo="${GITHUB_REPOSITORY}"
+          run_id="${GITHUB_RUN_ID}"
+          token="${{ secrets.GITHUB_TOKEN }}"
+          
+          failure=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
+          jq -r '.jobs[] | select(.status == "completed" and .conclusion == "failure").conclusion' | wc -l)
+
+          cancelled=$(curl -s -H "Authorization: token ${token}" "${url}/${repo}/actions/runs/${run_id}/jobs" | \
+          jq -r '.jobs[] | select(.status == "completed" and .conclusion == "cancelled").conclusion' | wc -l)
+          
+          if [ "${failure}" -gt 0 ]; then
+            status="failure"
+          elif [ "${cancelled}" -gt 0 ]; then
+            status="cancelled"
+          else 
+            status="success"
+          fi
+          
+          echo "status=${status}" >> $GITHUB_OUTPUT
+
+      - name: hoge
+        run: echo ${{ steps.workflow-status.outputs.status }}
+
+      - name: make success payload param
+        if: ${{ steps.workflow-status.outputs.status == 'success' }}
+        run: |
+          echo "ICON_EMOJI=:gift:" >> $GITHUB_ENV
+          echo "COLOR=#34eb34" >> $GITHUB_ENV
+          echo "TEXT=SUCCESS" >> $GITHUB_ENV
+ 
+      - name: make failure payload param
+        if: ${{ steps.workflow-status.outputs.status == 'failure' }}
+        run: |
+          echo "ICON_EMOJI=:exclamation:" >> $GITHUB_ENV
+          echo "COLOR=#eb4034" >> $GITHUB_ENV
+          echo "TEXT=FAILED" >> $GITHUB_ENV
+ 
+      - name: make cancel payload param
+        if: ${{ steps.workflow-status.outputs.status == 'cancelled' }}
+        run: |
+          echo "ICON_EMOJI=:grey_exclamation:" >> $GITHUB_ENV
+          echo "COLOR=#949494" >> $GITHUB_ENV
+          echo "TEXT=CANCELLED" >> $GITHUB_ENV
+ 
+      - name: send to webhook
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "icon_emoji": "${{ env.ICON_EMOJI }}",
+              "username": "${{ github.event.repository.name }}",
+              "text": "GitHub Action result: ${{ env.TEXT }}",
+              "attachments": [
+                {
+                  "color": "${{ env.COLOR }}",
+                  "author_name": "${{ github.actor }}",
+                  "author_icon": "${{ github.event.sender.avatar_url }}",
+                  "text": "${{ github.event.repository.html_url }}/actions/runs/${{ github.run_id }}"
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK

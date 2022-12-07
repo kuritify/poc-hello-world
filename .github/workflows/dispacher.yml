@@ -29,6 +29,18 @@ jobs:
     environment:
       name: ${{ inputs.environment }}
     steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+
       - name: hoge run
         run: echo deploy to ${{ inputs.environment }}
-      
+     
+      - name: create tag dayo
+        run: |
+          TAG=v$(jq -r < package.json .version)
+          git tag $TAG
+          git push origin $TAG
+          
