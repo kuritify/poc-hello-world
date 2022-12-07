@@ -1,0 +1,53 @@
+name: new one
+
+on:
+  push:
+
+jobs:
+  hoge-one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - naem: set cache 
+        uses: actions/cache@v3
+        id: cache-01
+        with:
+          path: /opt/cache-01
+        key: cache-01-${{ github.sha }}
+        restore-keys:
+          - cache-01-
+      - name: set cache 2
+        uses: actions/cache@v3
+        id: cache-02
+        with:
+          path: cache-02
+        key: cache-02-${{ github.sha }}
+        restore-keys:
+          - cache-02-
+
+      - name: ls -la before
+        run: |
+          ls -la /opt/cache-01 || true
+          ls -la cache-02 || true
+
+      - name: write
+        run: |
+          mkdir  /opt/cache-01/ || true
+          mkdir  cache-02 || true
+          echo "cache-01" > /opt/cache-01/${{ github.sha }}.txt
+          echo "cache-02" > cache-02/${{ github.sha }}.txt
+
+      - name: ls -la after
+        run: |
+          ls -la /opt/cache-01 || true
+          ls -la cache-02 || true
+
+
