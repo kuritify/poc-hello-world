@@ -1,0 +1,25 @@
+name: 'tfenv'
+on: [push]
+
+permissions:
+  contents: read
+
+jobs:
+  tfenver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+      
+      - name: 'use tfenv actions'
+        uses: rhythmictech/actions-setup-tfenv@v0.0.2
+
+      - name: run tfenv
+        run: tfenv --version
+
+      - name: run
+        run: |
+          cd terraform
+          terraform init
+          terraform --version
+
