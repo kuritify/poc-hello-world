@@ -19,7 +19,9 @@ jobs:
 
       - name: run
         run: |
-          cd terraform
+          cd terraform/development
+          ls -la
           terraform init
           terraform --version
+          terraform fmt -diff -check
 
